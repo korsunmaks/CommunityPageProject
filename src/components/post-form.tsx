@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, IconButton, TextField, Typography } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import usePostStore from "../store/postStore";
 
 const postSchema = z.object({
@@ -38,6 +39,10 @@ const PostForm = () => {
     }
   };
 
+  const removeImage = () => {
+    setValue("image", null);
+  };
+
   const onSubmit = (data: PostFormData) => {
     addPost(data.title, data.content, data.image ?? null);
     reset();
@@ -46,7 +51,7 @@ const PostForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-2 mb-6"
+      className="flex flex-col gap-4 mb-6"
     >
       <Typography variant="h6">Create a new post</Typography>
       <TextField
@@ -84,15 +89,22 @@ const PostForm = () => {
           className="hidden"
         />
       </div>
-
       {newPostImage && (
-        <img
-          src={newPostImage}
-          alt="Preview"
-          width={100}
-          height={100}
-          className="mb-4"
-        />
+        <div className="relative mb-4 w-fit">
+          <IconButton
+            className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+            onClick={removeImage}
+          >
+            <CloseIcon />
+          </IconButton>
+          <img
+            src={newPostImage}
+            alt="Preview"
+            width={100}
+            height={100}
+            className="rounded-lg"
+          />
+        </div>
       )}
       <Button variant="contained" color="primary" type="submit">
         Add Post
