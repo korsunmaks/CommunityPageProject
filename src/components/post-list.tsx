@@ -13,7 +13,10 @@ const PostList = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
+      <Typography variant="h6" className="text-center md:text-start">
+        Posts
+      </Typography>
       {posts.map((post) => (
         <PostItem key={post.id} post={post} />
       ))}

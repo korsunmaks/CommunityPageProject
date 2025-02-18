@@ -1,22 +1,21 @@
-import { useState } from "react";
-import { Post } from "../types";
-import { initialPosts } from "../mocks/mockData";
+import { Divider } from "@mui/material";
 import PostForm from "../components/post-form";
 import PostList from "../components/post-list";
 import Navbar from "../components/navbar";
 
 const CommunityPage = () => {
-  const [posts, setPosts] = useState<Post[]>(initialPosts);
-
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <div className="container mx-auto px-4 mt-6 flex flex-col md:flex-row md:justify-between gap-6">
         <div className="md:w-1/3 w-full">
-          <PostForm setPosts={setPosts} />
+          <PostForm />
+        </div>
+        <div className="md:hidden">
+          <Divider className="h-1 bg-gray-300" />
         </div>
         <div className="md:w-1/2 w-full">
-          <PostList posts={posts} setPosts={setPosts} />
+          <PostList />
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { Post } from "../types";
+import { initialPosts } from "../mocks/mockData";
 
 interface PostState {
   posts: Post[];
@@ -17,16 +18,7 @@ interface PostActions {
 }
 
 const usePostStore = create<PostState & PostActions>((set) => ({
-  posts: [
-    {
-      id: crypto.randomUUID(),
-      title: "Welcome to the Community!",
-      content: "This is the first post. Feel free to comment!",
-      image:
-        "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D",
-      comments: [],
-    },
-  ],
+  posts: initialPosts,
   addPost: (title: string, content: string, image: string | null) =>
     set((state: PostState) => ({
       posts: [
