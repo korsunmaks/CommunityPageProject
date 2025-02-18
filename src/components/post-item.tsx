@@ -1,24 +1,14 @@
 import { Button, Card, CardContent, Divider, Typography } from "@mui/material";
 import CommentList from "./comment-list";
 import { Post } from "../types";
+import usePostStore from "../store/postStore";
 
 interface PostItemProps {
   post: Post;
-  deletePost: (postId: string) => void;
-  addComment: (
-    postId: string,
-    parentCommentId: string | null,
-    text: string
-  ) => void;
-  deleteComment: (postId: string, commentId: string) => void;
 }
 
-const PostItem = ({
-  post,
-  deletePost,
-  addComment,
-  deleteComment,
-}: PostItemProps) => {
+const PostItem = ({ post }: PostItemProps) => {
+  const { deletePost } = usePostStore();
   return (
     <Card key={post.id} className="mb-4">
       <CardContent className="flex flex-col gap-4">
@@ -36,12 +26,7 @@ const PostItem = ({
             className="mb-4 max-w-full h-auto rounded-lg"
           />
         )}
-        <CommentList
-          postId={post.id}
-          comments={post.comments}
-          addComment={addComment}
-          deleteComment={deleteComment}
-        />
+        <CommentList postId={post.id} comments={post.comments} />
       </CardContent>
       <div className="m-2 flex justify-end">
         <Button

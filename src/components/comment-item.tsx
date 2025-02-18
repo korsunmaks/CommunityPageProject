@@ -1,26 +1,18 @@
 import { useState } from "react";
 import { Button, TextField, Typography } from "@mui/material";
 import { Comment } from "../types";
+import usePostStore from "../store/postStore";
 
 interface CommentItemProps {
   postId: string;
   comment: Comment;
-  addComment: (
-    postId: string,
-    parentCommentId: string | null,
-    text: string
-  ) => void;
-  deleteComment: (postId: string, commentId: string) => void;
 }
 
-const CommentItem = ({
-  postId,
-  comment,
-  addComment,
-  deleteComment,
-}: CommentItemProps) => {
+const CommentItem = ({ postId, comment }: CommentItemProps) => {
   const [reply, setReply] = useState("");
   const [showReply, setShowReply] = useState(false);
+
+  const { deleteComment, addComment } = usePostStore();
 
   return (
     <div className="ml-4 mt-2 p-2 border-l-2 border-gray-300">
@@ -62,13 +54,7 @@ const CommentItem = ({
         </div>
       )}
       {comment.replies.map((subComment) => (
-        <CommentItem
-          key={subComment.id}
-          postId={postId}
-          comment={subComment}
-          addComment={addComment}
-          deleteComment={deleteComment}
-        />
+        <CommentItem key={subComment.id} postId={postId} comment={subComment} />
       ))}
     </div>
   );

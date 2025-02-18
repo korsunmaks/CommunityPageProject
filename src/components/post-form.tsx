@@ -2,11 +2,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, TextField, Typography } from "@mui/material";
-import { Post } from "../types";
-
-interface PostFormProps {
-  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
-}
+import usePostStore from "../store/postStore";
 
 const postSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters long"),
@@ -16,7 +12,7 @@ const postSchema = z.object({
 
 type PostFormData = z.infer<typeof postSchema>;
 
-const PostForm = ({ setPosts }: PostFormProps) => {
+const PostForm = () => {
   const {
     register,
     handleSubmit,
@@ -29,6 +25,7 @@ const PostForm = ({ setPosts }: PostFormProps) => {
     defaultValues: { title: "", content: "", image: null },
   });
 
+  const { addPost } = usePostStore();
   const newPostImage = watch("image");
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,22 +38,16 @@ const PostForm = ({ setPosts }: PostFormProps) => {
     }
   };
 
-  const addPost = (data: PostFormData) => {
-    setPosts((prev) => [
-      ...prev,
-      {
-        id: crypto.randomUUID(),
-        title: data.title,
-        content: data.content,
-        image: data.image ?? null,
-        comments: [],
-      },
-    ]);
+  const onSubmit = (data: PostFormData) => {
+    addPost(data.title, data.content, data.image ?? null);
     reset();
   };
 
   return (
-    <form onSubmit={handleSubmit(addPost)} className="flex flex-col gap-2 mb-6">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-2 mb-6"
+    >
       <Typography variant="h6">Create a new post</Typography>
       <TextField
         fullWidth

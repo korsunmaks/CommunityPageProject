@@ -2,25 +2,17 @@ import { useState } from "react";
 import { Button, Divider, TextField, Typography } from "@mui/material";
 import CommentItem from "./comment-item";
 import { Comment } from "../types";
+import usePostStore from "../store/postStore";
 
 interface CommentListProps {
   postId: string;
   comments: Comment[];
-  addComment: (
-    postId: string,
-    parentCommentId: string | null,
-    text: string
-  ) => void;
-  deleteComment: (postId: string, commentId: string) => void;
 }
 
-const CommentList = ({
-  postId,
-  comments,
-  addComment,
-  deleteComment,
-}: CommentListProps) => {
+const CommentList = ({ postId, comments }: CommentListProps) => {
   const [newComment, setNewComment] = useState("");
+
+  const { addComment } = usePostStore();
 
   return (
     <div className="mt-4 flex flex-col gap-2">
@@ -46,13 +38,7 @@ const CommentList = ({
         Comment
       </Button>
       {comments.map((comment) => (
-        <CommentItem
-          key={comment.id}
-          postId={postId}
-          comment={comment}
-          addComment={addComment}
-          deleteComment={deleteComment}
-        />
+        <CommentItem key={comment.id} postId={postId} comment={comment} />
       ))}
     </div>
   );
