@@ -1,6 +1,6 @@
 # Community Page
 
-This is a **React + TypeScript** project that allows users to create posts, comment on them, and reply to comments in a nested structure. The project is styled using **Tailwind CSS** and **Material-UI (MUI)**.
+This is a **React + TypeScript** project that allows users to create posts, comment on them, and reply to comments in a nested structure. The project is styled using **Tailwind CSS** and **Material-UI (MUI)** and uses **Zustand** for state management.
 
 ## Features
 
@@ -10,6 +10,7 @@ This is a **React + TypeScript** project that allows users to create posts, comm
 - 🗑️ **Post & Comment Deletion** – Users can delete posts and comments.
 - 📸 **Image Uploads** – Posts can include images.
 - 🎨 **Responsive UI** – Designed with Tailwind CSS and Material-UI.
+- 🗂 **State Management with Zustand** – All post and comment operations are handled through Zustand.
 
 ---
 
@@ -41,7 +42,7 @@ Then, open **[http://localhost:5173](http://localhost:5173)** in your browser.
 
 - **Frontend:** React + TypeScript
 - **Styling:** Tailwind CSS + Material-UI
-- **State Management:** React Hooks (useState, useEffect)
+- **State Management:** Zustand
 - **Validation:** Zod + React Hook Form
 
 ---
@@ -58,9 +59,11 @@ community-page/
 │   │   ├── post-item.tsx    # Single post component
 │   │   ├── comment-list.tsx # Displays list of comments
 │   │   ├── comment-item.tsx # Single comment component
+│   ├── store/              # Zustand store for state management
+│   │   ├── postStore.ts     # Zustand store for posts and comments
 │   ├── pages/              # Page components
 │   ├── types/              # TypeScript types
-│   ├── mocks/              # Mock data (if applicable)
+│   ├── mocks/              # Mock data
 │── public/                 # Static assets
 │── package.json            # Project metadata & scripts
 │── vite.config.ts          # Vite configuration
@@ -92,7 +95,7 @@ npm run preview
   ```sh
   rm -rf node_modules package-lock.json && npm install
   ```
-- Check for the latest **Vite** and **React** versions.
+- Check for the latest **Vite**, **React**, and **Zustand** versions.
 
 ---
 
